@@ -8,119 +8,63 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      table,
-      th,
-      td {
-        border: 1px solid black;
-      }
-
-      th,
-      td {
-        padding: 10px;
-        text-align: left;
-      }
-
-      th {
-        background-color: #f2f2f2;
-      }
-
-      .total {
-        font-weight: bold;
-      }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body>
-    <h1>Car Accessories</h1>
+  <body class="p-6">
+    <h1 class="text-5xl font-bold">Car Accessories</h1>
 
-    <form id="accessoryForm">
-      <label for="accessory">Select an accessory:</label>
-      <select id="accessory" name="accessory">
-        <option value="p111">Car Cover</option>
-        <option value="p222">Seat Covers</option>
-        <option value="p333">Floor Mats</option>
-        <option value="p4444">Door Visor</option>
-        <!-- Add more options as needed -->
-      </select>
-      <br />
-      <label for="amount">Amount:</label>
-      <input type="number" id="amount" name="amount" min="1" value="1" />
-      <br />
+    <form id="accessoryForm" class="flex gap-4 mt-4 items-end">
+      <div class="flex flex-col">
+        <label for="accessory">Select an accessory:</label>
+        <select
+          id="accessory"
+          name="accessory"
+          class="rounded w-40 h-10 border-black border-2"
+        >
+          <option value="p111">Car Cover</option>
+          <option value="p222">Seat Covers</option>
+          <option value="p333">Floor Mats</option>
+          <option value="p4444">Door Visor</option>
+          <!-- Add more options as needed -->
+        </select>
+      </div>
+      <div class="flex-col flex">
+        <label for="amount">Amount:</label>
+        <input
+          class="rounded w-40 h-10 p-2 border-black border-2"
+          type="number"
+          id="amount"
+          name="amount"
+          min="1"
+          value="1"
+        />
+      </div>
 
-      <button type="button" onclick="addToProductList()">Add</button>
+      <button
+        type="button"
+        onclick="addToProductList()"
+        class="bg-black text-white w-40 h-10 rounded-md"
+      >
+        Add
+      </button>
     </form>
 
-    <h2>Product List</h2>
+    <h2 class="mt-6 text-xl font-bold">Product List</h2>
 
-    <table id="productList">
-      <tr>
+    <table id="productList" class="mt-2 max-w-screen-md w-full">
+      <tr class="border-black border-2 bg-black text-white">
         <th>Accessory</th>
         <th>Amount</th>
         <th>Price</th>
       </tr>
     </table>
+    <div id="total" class="hidden">
+      <p class="total mt-6">Gross Price: $<span id="totalPrice">0</span></p>
+      <p id="vat">VAT:</p>
+      <p id="netPrice">Net Price:</p>
+    </div>
 
-    <p class="total">Gross Price: $<span id="totalPrice">0</span></p>
-    <p id="vat">VAT:</p>
-    <p id="netPrice">Net Price:</p>
-
-    <script>
-      const VAT_RATE = 0.07;
-      let totalPrice = 0;
-
-      function addToProductList() {
-        const accessory = $("#accessory").val();
-        const amount = $("#amount").val();
-        const price = calculatePrice(accessory) * amount;
-        $("#productList").append(
-          "<tr><td>" +
-            accessory +
-            "</td><td>" +
-            amount +
-            "</td><td>$" +
-            price +
-            "</td></tr>",
-        );
-        updateTotalPrice(price);
-      }
-
-      function calculatePrice(accessory) {
-        // Add your own logic to calculate the price based on the selected accessory
-        switch (accessory) {
-          case "p111":
-            return 10;
-          case "p222":
-            return 20;
-          case "p333":
-            return 30;
-          case "p444":
-            return 40;
-          // Add more cases as
-          default:
-            return 0;
-        }
-      }
-
-      function calculateVAT() {
-        const vatAmount = (totalPrice * VAT_RATE).toFixed(2);
-        const netPrice = (
-          parseFloat(totalPrice) + parseFloat(vatAmount)
-        ).toFixed(2);
-        $("#vat").text(`VAT: ${vatAmount}`);
-        $("#netPrice").text(`Net Price: ${netPrice}`);
-      }
-
-      function updateTotalPrice(price) {
-        totalPrice += price;
-        $("#totalPrice").text(totalPrice.toFixed(2));
-        calculateVAT();
-      }
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
